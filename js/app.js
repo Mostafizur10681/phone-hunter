@@ -29,10 +29,13 @@ const displaySearchPhone = phones => {
     if (phones.length == 0) {
         const errorMessage = document.getElementById('error-message');
         errorMessage.style.display = 'block';
+
     }
     else {
         // loop & make card
         phones.slice(0, 20).forEach(phone => {
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.style.display = 'none';
             const div = document.createElement('div');
             div.classList.add('col');
             div.innerHTML = `
@@ -59,10 +62,11 @@ const loadPhoneDetails = phoneId => {
         .then(res => res.json())
         .then(data => displayPhoneDetails(data.data))
 }
-
+// Details card make
 const displayPhoneDetails = phone => {
     console.log(phone)
     const phoneDetails = document.getElementById('phone-details');
+    phoneDetails.textContent = '';
     const div = document.createElement('div');
     div.classList.add('card');
     div.innerHTML = `
@@ -70,19 +74,18 @@ const displayPhoneDetails = phone => {
         <div class="card-body">
             <h5 class="card-title text-center">${phone.name}</h5>
             <p class="card-text text-center">Brand: ${phone.brand}</p>
-            <p class="card-text text-center">Relase: ${phone.releaseDate}</p>
-            
+            <p class="card-text text-center">Relase: ${phone.releaseDate ? phone.releaseDate : ' Not found'}</p>      
             <p class="card-text text-center">Features:</p>
             <p class="card-text text-center">ChipSet: ${phone.mainFeatures.chipSet}</p>
             <p class="card-text text-center">DisplaySize: ${phone.mainFeatures.displaySize}</p>
             <p class="card-text text-center">Memory: ${phone.mainFeatures.memory}</p>
             <p class="card-text text-center">Sensor: ${phone.mainFeatures.sensors}</p>
-            <p class="card-text text-center">WLAN: ${phone.others.WLAN}</p>
-            <p class="card-text text-center">Bluetooth: ${phone.others.Bluetooth}</p>
-            <p class="card-text text-center">GPS: ${phone.others.GPS}</p>
-            <p class="card-text text-center">NFC: ${phone.others.NFC}</p>
-            <p class="card-text text-center">Radio: ${phone.others.Radio}</p>
-            <p class="card-text text-center">USB: ${phone.others.USB}</p>
+            <p class="card-text text-center">WLAN: ${phone.others != undefined ? phone.others.WLAN : 'not found'}</p>
+            <p class="card-text text-center">Bluetooth: ${phone.others != undefined ? phone.others.Bluetooth : 'Not found'}</p>
+            <p class="card-text text-center">GPS: ${phone.others != undefined ? phone.others.GPS : 'Not found'}</p>
+            <p class="card-text text-center">NFC: ${phone.others != undefined ? phone.others.NFC : 'Not found'}</p>
+            <p class="card-text text-center">Radio: ${phone.others != undefined ? phone.others.Radio : 'Not found'}</p>
+            <p class="card-text text-center">USB: ${phone.others != undefined ? phone.others.USB : 'Not found'}</p>
         </div>
     `;
     phoneDetails.appendChild(div);
