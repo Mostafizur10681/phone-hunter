@@ -1,11 +1,10 @@
 const loadSearchPhone = () => {
     const searchFeild = document.getElementById('search-field');
     const searchFeildValue = searchFeild.value;
-
     // clear sear field
     searchFeild.value = '';
-    // console.log(searchFeild);
-
+    const phoneDetails = document.getElementById('phone-details');
+    phoneDetails.textContent = '';
     // search-box check
     if (searchFeildValue == '') {
         alert('Please write something on search field & try again later!!')
@@ -17,7 +16,6 @@ const loadSearchPhone = () => {
             .then(res => res.json())
             .then(data => displaySearchPhone(data.data))
     }
-
 }
 
 const displaySearchPhone = phones => {
@@ -29,7 +27,6 @@ const displaySearchPhone = phones => {
     if (phones.length == 0) {
         const errorMessage = document.getElementById('error-message');
         errorMessage.style.display = 'block';
-
     }
     else {
         // loop & make card
@@ -39,12 +36,12 @@ const displaySearchPhone = phones => {
             const div = document.createElement('div');
             div.classList.add('col');
             div.innerHTML = `
-                <div class="card p-3 w-75 shadow bg-light mx-auto rounded py-2 h-100">
-                    <img src="${phone.image}" class="card-img-top " alt="...">
+                <div class="card p-3 w-100 shadow bg-light mx-auto rounded py-2 h-100">
+                    <img src="${phone.image}" class="card-img-top w-75 mx-auto" alt="...">
                     <div class="card-body">
                         <h5 class="card-title text-center">${phone.phone_name}</h5>
                         <p class="card-text text-center">Brand: ${phone.brand}</p>
-                        <button type="button" onclick="loadPhoneDetails('${phone.slug}')" class="btn btn-success w-50 ms-5 mx-auto">Details</button>
+                        <button type="button" onclick="loadPhoneDetails('${phone.slug}')" class="btn btn-success w-75 ms-4 mx-auto">Details</button>
                     </div>
                 </div>
            `
@@ -64,7 +61,6 @@ const loadPhoneDetails = phoneId => {
 }
 // Details card make
 const displayPhoneDetails = phone => {
-    console.log(phone)
     const phoneDetails = document.getElementById('phone-details');
     phoneDetails.textContent = '';
     const div = document.createElement('div');
